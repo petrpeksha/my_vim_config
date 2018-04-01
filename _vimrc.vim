@@ -49,6 +49,7 @@ au BufNewFile,BufRead *.sql set filetype=plsql
 au BufNewFile,BufRead *.trg set filetype=plsql
 au BufNewFile,BufRead *.pck set filetype=plsql
 au BufNewFile,BufRead *.tps set filetype=plsql
+au BufNewFile,BufRead *.tpb set filetype=plsql
 au BufNewFile,BufRead *.vim set filetype=vim
 
 map <F2> aSELECT * FROM 
