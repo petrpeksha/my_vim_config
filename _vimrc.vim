@@ -3,48 +3,93 @@ behave mswin
 
 autocmd FileType sql let b:vimpipe_command="sqlplus -s /"
 
+" Use Vim settings, rather then Vi settings
 set nocompatible
+
+" Encoding
 set encoding=utf-8
-set history=9999     " big old history
-set number           " turn on line numbers
-set numberwidth=5    " We are good up to 99999 lines
-set tabstop=4        " set tabulator length to 4 columns
-set nowrap           " do not wrap line
-set showcmd          " show command in bottom bar
-set cursorline       " highlight current line
-set showmatch        " highlight matching [{()}]
-set guioptions+=b    " horizontal scrollbar
-set backspace=2 " make backspace work like most other apps
+
+" Big old history
+set history=9999
+
+" Turn on line numbers
+set number
+
+" Show file stats
+set ruler
+
+" Blink cursor on error instead of beeping
+set visualbell
+
+" Turn on syntax highlighting
+syntax on
+
+" We are good up to 99999 lines
+set numberwidth=5
+
+" Set tabulator length to 4 columns
+set tabstop=4
+
+" Number of spaces in tab when editing
+set softtabstop=4
+
+" Tabs are spaces
+set expandtab
+
+" Do not wrap line
+set nowrap
+
+" Show command in bottom bar
+set showcmd
+
+" Highlight current line
+set cursorline
+
+" Visual autocomplete for command menu
+set wildmenu
+
+" Highlight matching [{()}]
+set showmatch
+
+" Horizontal scrollbar
+set guioptions+=b
+
+" Make backspace work like most other apps
+set backspace=2
+
+" Use case insensitive search, except when using capital letters
+set ignorecase
+set smartcase
 set hlsearch
 
  " Backup settings
-set backup
-set backupdir=C:\\Temp
-set dir=C:\\Temp
+if has("vms")
+  set nobackup		" do not keep a backup file, use versions instead
+else
+  set backup		" keep a backup file
+  set backupdir=C:\\Temp
+  set dir=C:\\Temp
+  set writebackup
+endif
 
-" Smart tabs
-set noexpandtab
-set autoindent
-set cindent
-set copyindent
-set preserveindent
-set softtabstop=0
-set shiftwidth=4
-set tabstop=4
-
-" font
+" Font
 if has('gui_running')
   set guifont=Courier_New:h10
 endif
 
-let mapleader=","    " leader is comma
+" Leader is comma
+let mapleader=","
+
+" jk is escape
+inoremap jk <esc>
 
 filetype plugin on
 
+" Colors
 colorscheme sourcerer
 
-syntax on
 filetype on
+
 au BufNewFile,BufRead *.sql set filetype=plsql
 au BufNewFile,BufRead *.trg set filetype=plsql
 au BufNewFile,BufRead *.pck set filetype=plsql
@@ -54,12 +99,34 @@ au BufNewFile,BufRead *.vim set filetype=vim
 
 map <F2> aSELECT * FROM 
 map <F3> aDBMS_OUTPUT.PUT_LINE('
+map <C-n> :NERDTreeToggle<CR>
 
+" Pathogen plugin execute
+execute pathogen#infect()
+filetype plugin indent on
+
+" python-mode plugin
+" let g:pymode_python = 'python3'
+
+" syntastic plugin
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
+
+" gim-gutter
+let g:gitgutter_max_signs = 500
+nmap ]h <Plug>GitGutterNextHunk
+nmap [h <Plug>GitGutterPrevHunk
+nmap <Leader>hs <Plug>GitGutterStageHunk
+nmap <Leader>hu <Plug>GitGutterUndoHunk
 
 " tuning for gVim only
 if has('gui_running')
     set columns=160 lines=46 " GUI window geometry
-    set number " show line numbers
 endif
 
 " Let me choose the statusbar
